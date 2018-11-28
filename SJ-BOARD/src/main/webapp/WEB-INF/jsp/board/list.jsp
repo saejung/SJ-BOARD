@@ -13,7 +13,7 @@
 </head>
 
 <body>
-	게시판 목록 페이지ccc
+	게시판 목록 페이지
 	
 	<h2>${boardMaster.bodNm}</h2>
 	<div class="writeButton"><a href="${pageContext.servletContext.contextPath}/board/write" title="새 글 등록">새 글 등록</a></div>
