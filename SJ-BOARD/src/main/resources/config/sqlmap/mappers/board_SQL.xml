@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjBoard.dao.SjBoardMapper">
+	
+	<select	id="selectBoardMasterList" parameterType="long" resultType="BoardMasterVO">
+		SELECT * 
+		FROM TB_BOARDMASTER 
+		WHERE BOD_ID = #{bodId}
+	</select>
+	
+	<select	id="selectBoardList" parameterType="com.sjBoard.domain.BoardSearchVO" resultType="BoardVO">
+			 SELECT 
+	    		AA.*
+			 FROM (
+			    SELECT A.*, ROWNUM RN FROM (
+	    			SELECT * 
+					FROM TB_BOARD 
+					WHERE BOD_ID = #{bodId}
+			    ) A
+		   	<![CDATA[
+			WHERE ROWNUM <= (#{pagination.pageIdx} * #{pagination.recordSizePerPage})
+			) AA WHERE RN > ((#{pagination.pageIdx} - 1) * #{pagination.recordSizePerPage})
+			]]>
+			
+	</select>
+	
+	<select id="selectBoardListTotalCnt" parameterType="long" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM TB_BOARD 
+		WHERE BOD_ID = #{bodId}
+	</select>
+	
+	<select	id="selectBoard" parameterType="long" resultType="BoardVO">
+		SELECT * 
+		FROM TB_BOARD 
+		WHERE IDX = #{bodIdx}
+	</select>
+	
+</mapper>
